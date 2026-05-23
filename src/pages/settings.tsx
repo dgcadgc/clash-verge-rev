@@ -1,4 +1,4 @@
-import { GitHub, HelpOutlineRounded, Telegram } from '@mui/icons-material'
+import { GitHub, Telegram } from '@mui/icons-material'
 import { Box, ButtonGroup, IconButton, Grid } from '@mui/material'
 import { useLockFn } from 'ahooks'
 import { useTranslation } from 'react-i18next'
@@ -23,10 +23,6 @@ const SettingPage = () => {
     return openWebUrl('https://github.com/clash-verge-rev/clash-verge-rev')
   })
 
-  const toGithubDoc = useLockFn(() => {
-    return openWebUrl('https://clash-verge-rev.github.io/index.html')
-  })
-
   const toTelegramChannel = useLockFn(() => {
     return openWebUrl('https://t.me/clash_verge_re')
   })
@@ -39,14 +35,6 @@ const SettingPage = () => {
       title={t('settings.page.title')}
       header={
         <ButtonGroup variant="contained" aria-label="Basic button group">
-          <IconButton
-            size="medium"
-            color="inherit"
-            title={t('settings.page.actions.manual')}
-            onClick={toGithubDoc}
-          >
-            <HelpOutlineRounded fontSize="inherit" />
-          </IconButton>
           <IconButton
             size="medium"
             color="inherit"

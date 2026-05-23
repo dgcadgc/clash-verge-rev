@@ -44,13 +44,24 @@ pub async fn check_singleton() -> Result<()> {
                 }
             }
         } else {
-            client
+            match client
                 .get(format!("http://127.0.0.1:{port}/commands/visible"))
                 .send()
-                .await?;
+                .await
+            {
+                Ok(_) => {
+                    logging!(error, Type::Window, "failed to setup singleton listen server");
+                    bail!("app exists");
+                }
+                Err(e) => {
+                    logging!(
+                        warn,
+                        Type::Window,
+                        "Singleton port {port} is in use but existing instance is unresponsive: {e}. Continuing startup."
+                    );
+                }
+            }
         }
-        logging!(error, Type::Window, "failed to setup singleton listen server");
-        bail!("app exists");
     }
     Ok(())
 }
