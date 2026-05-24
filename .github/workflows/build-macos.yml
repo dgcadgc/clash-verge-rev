@@ -62,18 +62,9 @@ jobs:
 
       - name: Prepare Rust targets
         run: |
-          set -eux
-          rustup target add ${{ matrix.target }} --toolchain 1.95.0 || true
-          if [ -f rust-toolchain.toml ]; then
-            CHANNEL=$(grep -E '^\s*channel\s*=' rust-toolchain.toml | head -1 | sed -E 's/.*=\s*"([^"]+)".*/\1/')
-            if [ -n "$CHANNEL" ]; then
-              rustup toolchain install "$CHANNEL"
-              rustup target add ${{ matrix.target }} --toolchain "$CHANNEL"
-            fi
-          fi
-          rustup target add ${{ matrix.target }}
-          rustup show active-toolchain
+          rustup target add ${{ matrix.target }} --toolchain 1.95.0 || rustup target add ${{ matrix.target }}
           rustup target list --installed
+          rustup show active-toolchain
 
       - name: Build DMG
         run: pnpm tauri build --target ${{ matrix.target }}
