@@ -33,6 +33,11 @@ jobs:
           toolchain: "1.95.0"
           targets: ${{ matrix.target }}
 
+      - name: Add Rust target
+        run: |
+          rustup target add ${{ matrix.target }} --toolchain 1.95.0
+          rustup target list --installed --toolchain 1.95.0
+
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
         with:
